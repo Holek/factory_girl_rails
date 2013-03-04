@@ -8,7 +8,13 @@ module FactoryGirl
       end
 
       def explicit_class_option
-        ", :class => '#{class_name}'" unless class_name == singular_table_name.camelize
+        unless class_name == singular_table_name.camelize
+          if RUBY_VERSION >= '1.8'
+            ", class: '#{class_name}'"
+          else
+            ", :class => '#{class_name}'"
+          end
+        end
       end
     end
   end
